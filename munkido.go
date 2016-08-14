@@ -3,14 +3,14 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"github.com/natewalck/appinstaller"
-	"os"
 )
 
 func main() {
-	// Program Name is always the first (implicit) argument
-	cmd := os.Args[0]
+	var applist string
+	flag.StringVar(&applist, "a", "", "specify applist to use. ")
+	flag.Parse()
 
-	fmt.Printf("Program Name: %s\n", cmd)
+	fmt.Printf("applist = %s", applist)
 }
