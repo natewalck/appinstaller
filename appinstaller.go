@@ -3,17 +3,18 @@
 package main
 
 import (
-	"flag"
-	"github.com/natewalck/macosutils"
+    "flag"
+    "github.com/natewalck/macosutils"
 )
 
 func main() {
-	var (
-		dmgPath = flag.String("dmg", "", "path to dmg")
-	)
-	flag.Parse()
+    var (
+        dmgPath = flag.String("dmg", "", "path to dmg")
+    )
+    flag.Parse()
 
-	mountpoint := macosutils.MountDmg(*dmgPath)
-	macosutils.InstallApp(mountpoint)
-	macosutils.UnmountDmg(mountpoint)
+    my_dmg := macosutils.DMG{}
+    my_dmg.Mount(*dmgPath)
+    macosutils.InstallApp(my_dmg.MountPoint)
+    my_dmg.Unmount(my_dmg.MountPoint)
 }
