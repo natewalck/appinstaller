@@ -5,6 +5,7 @@ package main
 import (
     "flag"
     "github.com/natewalck/macosutils"
+    "log"
 )
 
 func main() {
@@ -15,6 +16,20 @@ func main() {
 
     my_dmg := macosutils.DMG{}
     my_dmg.Mount(*dmgPath)
-    macosutils.InstallApp(my_dmg.MountPoint)
+    my_dmg.GetInstallables()
+    if len(my_dmg.Pkgs) > 0 {
+        for _, p := range my_dmg.Pkgs {
+            log.Printf("Installing: %v\n", p)
+            macosutils.InstallPkg(my_dmg.MountPoint, p)
+        }
+    }
+    if len(my_dmg.Apps) > 0 {
+        for _, a := range my_dmg.Apps {
+            log.Printf("Installing: %v\n", a)
+            macosutils.InstallApp(my_dmg.MountPoint, a)
+        }
+    }
+
     my_dmg.Unmount(my_dmg.MountPoint)
+    log.Printf("Unmounted dmg...")
 }
