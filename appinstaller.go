@@ -22,12 +22,13 @@ func main() {
             log.Printf("Installing: %v\n", p)
             macosutils.InstallPkg(my_dmg.MountPoint, p)
         }
-    }
-    if len(my_dmg.Apps) > 0 {
+    } else if len(my_dmg.Apps) > 0 {
         for _, a := range my_dmg.Apps {
             log.Printf("Installing: %v\n", a)
             macosutils.InstallApp(my_dmg.MountPoint, a)
         }
+    } else {
+        log.Print("Nothing found to install.")
     }
 
     my_dmg.Unmount(my_dmg.MountPoint)
