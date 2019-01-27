@@ -15,7 +15,10 @@ func main() {
 	)
 	flag.Parse()
 
-	myDmg := macosutils.NewDMG(*dmgPath)
+	myDmg, err := macosutils.NewDMG(*dmgPath)
+	if err != nil {
+		log.Printf("Failed to get DMG object for %v", *dmgPath)
+	}
 	myDmg.Mount()
 	myDmg.GetInstallables()
 	if len(myDmg.Pkgs) > 0 {
